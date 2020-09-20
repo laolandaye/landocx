@@ -39,11 +39,19 @@ http://localhost:8083/api/ws/sendAll?message=我是测试群发消息
 http://localhost:8083/api/ws/sendOne?message=我是单发消息1&id=81956079-413f-e49a-45ae-4e80e4ab5bd9
 ```
 
+### 1.1.3 websocket默认长度限制
+
+tomcat: websocket 发送内容长度设置（默认8192字节）
+
+<https://blog.csdn.net/zhaotian19871204/article/details/84801915>
+
+
+
 ## 1.2 原生集成webSocket
 
 使用项目 websocket-server
 
-# 2 java client连接websocket接口**
+# 2 java client连接websocket接口
 
  https://blog.csdn.net/mengxb12138/article/details/81016782
 
