@@ -1,4 +1,4 @@
-# 1 **spring系列集成webSocket**
+# 1 **集成webSocket**服务端
 
 ## 1.1 集成webSocket
 
@@ -51,13 +51,47 @@ tomcat: websocket 发送内容长度设置（默认8192字节）
 
 使用项目 websocket-server
 
-# 2 java client连接websocket接口
+# 2 java client连接websocket客户端
+
+## 2.1 原始集成
 
  https://blog.csdn.net/mengxb12138/article/details/81016782
 
 使用项目websocket-javaclient: com.websocket.config.DestApp 测试
 
 ![javaclient客户端](./assets/javaclient客户端.png)
+
+## 2.2 Spring Boot集成
+
+spring-websocket-client
+
+### 2.2.1 启动连接
+
+启动连接： ScInit.webSocketJavaClient.clientConnect();
+
+发送消息：mWs.send(msg);
+
+### 2.2.2 心跳测试
+
+com.kun.sc.config.ScheduledJob#webSocketHeart
+
+系统发现websocket每隔1分钟自动断开连接，
+
+<https://www.cnblogs.com/gxp69/archive/2019/10/25/11736749.html>
+
+
+
+## 2.3 问题
+
+### 2.3.1 连接中断The connection
+
+ "The connection was closed because the other endpoint did not respond with a pong in time. For more information check: https://github.com/TooTallNate/Java-WebSocket/wiki/Lost-connection-detection；"
+
+连接后，然后就客户端就断开了、傻逼无线循环没有关闭
+
+![无线循环结束](./assets/无线循环结束.png)
+
+
 
 # 3 serverclinet 集成
 
