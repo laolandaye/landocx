@@ -1,0 +1,19 @@
+https://www.cnblogs.com/taomylife/p/7234925.html
+
+卸载前关闭MySQL服务：           systemctl stop mysql.service
+
+检查是否安装了MySQL组件：       rpm -qa | grep -i mysql
+卸载删除MySQL各类组件           rpm -ev ***
+
+收集MySQL对应的文件夹信息       whereis mysql
+                               find / -name mysql
+删除MySQL对应的文件夹           rm -rf ****
+
+删除mysql用户及用户组           userdel mysql
+                               groupdel mysql
+
+
+
+
+
+

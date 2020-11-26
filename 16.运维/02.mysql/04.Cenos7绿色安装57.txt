@@ -1,0 +1,67 @@
+https://www.cnblogs.com/daemon-/p/9009360.html
+
+2、将mysql安装到/usr/local/mysql下,新建data目录
+cd  /usr/local/mysql
+mkdir /usr/local/mysql/data
+
+4、新建mysql用户、mysql用户组,将/usr/local/mysql的所有者及所属组改为mysql
+groupadd mysql
+useradd mysql -g mysql
+chown -R mysql.mysql /usr/local/mysql
+
+6、初始化脚本
+/usr/local/mysql/bin/mysqld --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data --initialize
+得到初始密码：+li/<(w4r_XH
+
+# 编辑 vim /etc/my.cnf
+[mysqld]
+datadir=/usr/local/mysql/data
+basedir=/usr/local/mysql
+socket=/tmp/mysql.sock
+user=mysql
+port=3306
+character-set-server=utf8
+skip-name-resolve
+# 取消密码验证
+skip-grant-tables
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+[mysql]
+socket=/tmp/mysql.sock
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+7、开启服务
+# 将mysql加入服务
+cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+# conos6                        cenos7
+chkconfig mysql on              systemctl enable mysql
+service mysql start             systemctl start mysql
+
+8、设置密码
+# 登录（由于/etc/my.cnf中设置了取消密码验证，所以此处密码任意）
+/usr/local/mysql/bin/mysql -u root -p
+    use mysql;
+    update user set authentication_string=password('root') where user='root';
+    flush privileges;
+    exit;
+
+9、将/etc/my.cnf中的 skip-grant-tables 删除, 重启mysql
+
+10、登录再次设置密码（不知道为啥如果不再次设置密码就操作不了数据库了）
+/usr/local/mysql/bin/mysql -u root -p
+ ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+ exit;
+
+11、允许远程连接
+/usr/local/mysql/bin/mysql -u root -p
+  use mysql;
+  update user set host='%' where user = 'root';
+  flush privileges;
+  exit;
+
+12、添加快捷方式
+ln -s /usr/local/mysql/bin/mysql /usr/bin
